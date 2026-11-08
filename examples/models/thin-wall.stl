@@ -1,0 +1,86 @@
+solid thin-wall
+facet normal 0 0 0
+outer loop
+vertex 0 0 0
+vertex 20 0.9 0
+vertex 20 0 0
+endloop
+endfacet
+facet normal 0 0 0
+outer loop
+vertex 0 0 0
+vertex 0 0.9 0
+vertex 20 0.9 0
+endloop
+endfacet
+facet normal 0 0 0
+outer loop
+vertex 0 0 10
+vertex 20 0 10
+vertex 20 0.9 10
+endloop
+endfacet
+facet normal 0 0 0
+outer loop
+vertex 0 0 10
+vertex 20 0.9 10
+vertex 0 0.9 10
+endloop
+endfacet
+facet normal 0 0 0
+outer loop
+vertex 0 0 0
+vertex 20 0 0
+vertex 20 0 10
+endloop
+endfacet
+facet normal 0 0 0
+outer loop
+vertex 0 0 0
+vertex 20 0 10
+vertex 0 0 10
+endloop
+endfacet
+facet normal 0 0 0
+outer loop
+vertex 20 0 0
+vertex 20 0.9 0
+vertex 20 0.9 10
+endloop
+endfacet
+facet normal 0 0 0
+outer loop
+vertex 20 0 0
+vertex 20 0.9 10
+vertex 20 0 10
+endloop
+endfacet
+facet normal 0 0 0
+outer loop
+vertex 20 0.9 0
+vertex 0 0.9 0
+vertex 0 0.9 10
+endloop
+endfacet
+facet normal 0 0 0
+outer loop
+vertex 20 0.9 0
+vertex 0 0.9 10
+vertex 20 0.9 10
+endloop
+endfacet
+facet normal 0 0 0
+outer loop
+vertex 0 0.9 0
+vertex 0 0 0
+vertex 0 0 10
+endloop
+endfacet
+facet normal 0 0 0
+outer loop
+vertex 0 0.9 0
+vertex 0 0 10
+vertex 0 0.9 10
+endloop
+endfacet
+endsolid thin-wall

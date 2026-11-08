@@ -1,0 +1,1 @@
+{"schemaVersion":"1.0","id":"generic-asa","name":"Generic ASA - review spool settings","material":"ASA","density":1.13,"nozzleTemperature":250,"bedTemperature":85,"maxVolumetricFlow":6,"minLayerHeight":0.08,"maxLayerHeight":0.3,"fanPercent":0}

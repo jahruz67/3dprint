@@ -1,0 +1,7 @@
+/tools/
+/bin/
+/frontend/node_modules/
+/frontend/dist/
+/artifacts/
+*.log
+.DS_Store

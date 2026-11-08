@@ -1,0 +1,1 @@
+{"schemaVersion":"1.0","id":"generic-tpu","name":"Generic TPU 95A - review spool settings","material":"TPU","density":1.22,"nozzleTemperature":220,"bedTemperature":50,"maxVolumetricFlow":2,"minLayerHeight":0.08,"maxLayerHeight":0.3,"fanPercent":100}

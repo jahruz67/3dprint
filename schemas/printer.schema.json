@@ -1,0 +1,748 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-slicer.local/schemas/printer.schema.json",
+  "title": "Forge printer profile 1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "manufacturer",
+    "model",
+    "firmware",
+    "buildVolume",
+    "motion",
+    "extruders",
+    "thermal",
+    "capabilities",
+    "provenance"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "description": "Schema compatibility version. Unknown versions require an explicit future migration.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "examples": [
+        "1.0"
+      ],
+      "const": "1.0"
+    },
+    "id": {
+      "type": "string",
+      "description": "Portable identifier, unique in its profile category.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "examples": [
+        "my-printer-main"
+      ],
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable machine name.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "manufacturer": {
+      "type": "string",
+      "description": "Verified manufacturer identity.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "model": {
+      "type": "string",
+      "description": "Exact installed model/revision, not a guessed family.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "firmware": {
+      "type": "object",
+      "description": "Firmware identity and explicitly supported G-code contract.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "properties": {
+        "family": {
+          "type": "string",
+          "description": "Verified firmware family.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "enum": [
+            "marlin",
+            "klipper",
+            "reprap"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "description": "Exact installed version or documented verified compatibility range.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "gcodeFlavor": {
+          "type": "string",
+          "description": "PrusaSlicer adapter flavor. Must agree with family.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "enum": [
+            "marlin2",
+            "klipper",
+            "reprapfirmware"
+          ]
+        },
+        "extrusionMode": {
+          "type": "string",
+          "description": "Extrusion coordinate interpretation. Initializer sets matching M82 or M83.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "enum": [
+            "absolute",
+            "relative"
+          ]
+        },
+        "supportedCommands": {
+          "type": "array",
+          "description": "Explicitly verified firmware commands. Command names only; never executable shell commands.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minItems": 0,
+          "maxItems": 256,
+          "items": {
+            "type": "string",
+            "description": "G-code command name.",
+            "x-unit": "none",
+            "x-defaultBehavior": "Required; no implicit default",
+            "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+            "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+            "x-safety": "Verify values against the exact hardware and firmware before printing.",
+            "pattern": "^(G|M|T)[0-9]+$"
+          }
+        },
+        "unsupportedCommands": {
+          "type": "array",
+          "description": "Explicitly verified firmware commands. Command names only; never executable shell commands.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minItems": 0,
+          "maxItems": 256,
+          "items": {
+            "type": "string",
+            "description": "G-code command name.",
+            "x-unit": "none",
+            "x-defaultBehavior": "Required; no implicit default",
+            "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+            "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+            "x-safety": "Verify values against the exact hardware and firmware before printing.",
+            "pattern": "^(G|M|T)[0-9]+$"
+          }
+        },
+        "startGcode": {
+          "type": "array",
+          "description": "Literal G-code lines. No template expansion, macros, scripts or shell execution. Commands must be supported and output must pass full G-code validation.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minItems": 0,
+          "maxItems": 128,
+          "items": {
+            "type": "string",
+            "description": "Single literal G-code line; semicolon comments permitted.",
+            "x-unit": "none",
+            "x-defaultBehavior": "Required; no implicit default",
+            "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+            "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+            "x-safety": "Verify values against the exact hardware and firmware before printing.",
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]*$"
+          }
+        },
+        "endGcode": {
+          "type": "array",
+          "description": "Literal G-code lines. No template expansion, macros, scripts or shell execution. Commands must be supported and output must pass full G-code validation.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minItems": 0,
+          "maxItems": 128,
+          "items": {
+            "type": "string",
+            "description": "Single literal G-code line; semicolon comments permitted.",
+            "x-unit": "none",
+            "x-defaultBehavior": "Required; no implicit default",
+            "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+            "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+            "x-safety": "Verify values against the exact hardware and firmware before printing.",
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]*$"
+          }
+        }
+      },
+      "required": [
+        "family",
+        "version",
+        "gcodeFlavor",
+        "extrusionMode",
+        "supportedCommands",
+        "unsupportedCommands",
+        "startGcode",
+        "endGcode"
+      ],
+      "additionalProperties": false
+    },
+    "buildVolume": {
+      "type": "object",
+      "description": "Usable Cartesian printing volume after permanent mechanical clearances. Initial adapter supports front-left rectangular beds.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "properties": {
+        "width": {
+          "type": "number",
+          "description": "Usable X extent after toolhead clearances.",
+          "x-unit": "mm",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minimum": 10.0,
+          "maximum": 2000.0
+        },
+        "depth": {
+          "type": "number",
+          "description": "Usable Y extent after toolhead clearances.",
+          "x-unit": "mm",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minimum": 10.0,
+          "maximum": 2000.0
+        },
+        "height": {
+          "type": "number",
+          "description": "Usable Z extent.",
+          "x-unit": "mm",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minimum": 10.0,
+          "maximum": 2000.0
+        },
+        "shape": {
+          "type": "string",
+          "description": "Supported bed geometry.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "enum": [
+            "rectangular"
+          ]
+        },
+        "origin": {
+          "type": "string",
+          "description": "Coordinate origin used by model placement and G-code.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "enum": [
+            "front-left"
+          ]
+        },
+        "excludedRegions": {
+          "type": "array",
+          "description": "Rectangular regions unavailable for printing or motion.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minItems": 0,
+          "maxItems": 64,
+          "items": {
+            "type": "object",
+            "description": "Excluded rectangular bed area. Model and generated motions must avoid it.",
+            "x-unit": "none",
+            "x-defaultBehavior": "Required; no implicit default",
+            "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+            "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+            "x-safety": "Verify values against the exact hardware and firmware before printing.",
+            "properties": {
+              "x": {
+                "type": "number",
+                "description": "Lower-left X coordinate.",
+                "x-unit": "mm",
+                "x-defaultBehavior": "Required; no implicit default",
+                "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+                "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+                "x-safety": "Verify values against the exact hardware and firmware before printing.",
+                "minimum": 0.0,
+                "maximum": 2000.0
+              },
+              "y": {
+                "type": "number",
+                "description": "Lower-left Y coordinate.",
+                "x-unit": "mm",
+                "x-defaultBehavior": "Required; no implicit default",
+                "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+                "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+                "x-safety": "Verify values against the exact hardware and firmware before printing.",
+                "minimum": 0.0,
+                "maximum": 2000.0
+              },
+              "width": {
+                "type": "number",
+                "description": "Excluded rectangle width.",
+                "x-unit": "mm",
+                "x-defaultBehavior": "Required; no implicit default",
+                "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+                "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+                "x-safety": "Verify values against the exact hardware and firmware before printing.",
+                "minimum": 0.01,
+                "maximum": 2000.0
+              },
+              "depth": {
+                "type": "number",
+                "description": "Excluded rectangle depth.",
+                "x-unit": "mm",
+                "x-defaultBehavior": "Required; no implicit default",
+                "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+                "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+                "x-safety": "Verify values against the exact hardware and firmware before printing.",
+                "minimum": 0.01,
+                "maximum": 2000.0
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "width",
+              "depth"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "width",
+        "depth",
+        "height",
+        "shape",
+        "origin",
+        "excludedRegions"
+      ],
+      "additionalProperties": false
+    },
+    "motion": {
+      "type": "object",
+      "description": "Non-overridable machine motion limits. Profile speeds are capabilities, not print presets.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "properties": {
+        "maxSpeed": {
+          "type": "number",
+          "description": "Maximum permitted extrusion motion speed.",
+          "x-unit": "mm/s",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minimum": 1.0,
+          "maximum": 1000.0
+        },
+        "maxTravelSpeed": {
+          "type": "number",
+          "description": "Maximum permitted non-extruding motion speed.",
+          "x-unit": "mm/s",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minimum": 1.0,
+          "maximum": 1500.0
+        },
+        "maxAcceleration": {
+          "type": "number",
+          "description": "Maximum permitted commanded acceleration.",
+          "x-unit": "mm/s2",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minimum": 1.0,
+          "maximum": 50000.0
+        }
+      },
+      "required": [
+        "maxSpeed",
+        "maxTravelSpeed",
+        "maxAcceleration"
+      ],
+      "additionalProperties": false
+    },
+    "extruders": {
+      "type": "array",
+      "description": "Exactly one extruder supported in initial adapter.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "description": "One extrusion system. Multi-tool hardware is outside initial release scope.",
+        "x-unit": "none",
+        "x-defaultBehavior": "Required; no implicit default",
+        "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+        "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+        "x-safety": "Verify values against the exact hardware and firmware before printing.",
+        "properties": {
+          "nozzleDiameter": {
+            "type": "number",
+            "description": "Installed nozzle bore diameter, measured or manufacturer specified.",
+            "x-unit": "mm",
+            "x-defaultBehavior": "Required; no implicit default",
+            "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+            "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+            "x-safety": "Verify values against the exact hardware and firmware before printing.",
+            "minimum": 0.1,
+            "maximum": 2.0
+          },
+          "filamentDiameter": {
+            "type": "number",
+            "description": "Nominal input filament diameter.",
+            "x-unit": "mm",
+            "x-defaultBehavior": "Required; no implicit default",
+            "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+            "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+            "x-safety": "Verify values against the exact hardware and firmware before printing.",
+            "minimum": 1.0,
+            "maximum": 4.0
+          },
+          "maxVolumetricFlow": {
+            "type": "number",
+            "description": "Configured hot-end flow cap. Factory defaults and conservative preset values are accepted without calibration or verification; material profiles may reduce this cap. New drafts start at 4 mm3/s.",
+            "x-unit": "mm3/s",
+            "x-defaultBehavior": "Required; no implicit default",
+            "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+            "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+            "x-safety": "Verify values against the exact hardware and firmware before printing.",
+            "minimum": 0.1,
+            "maximum": 100.0
+          },
+          "retractionLength": {
+            "type": "number",
+            "description": "Explicit extrusion retraction distance.",
+            "x-unit": "mm",
+            "x-defaultBehavior": "Required; no implicit default",
+            "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+            "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+            "x-safety": "Verify values against the exact hardware and firmware before printing.",
+            "minimum": 0.0,
+            "maximum": 15.0
+          },
+          "retractionSpeed": {
+            "type": "number",
+            "description": "Retraction feed rate, never above machine speed cap.",
+            "x-unit": "mm/s",
+            "x-defaultBehavior": "Required; no implicit default",
+            "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+            "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+            "x-safety": "Verify values against the exact hardware and firmware before printing.",
+            "minimum": 1.0,
+            "maximum": 150.0
+          },
+          "flowVerified": {
+            "type": "boolean",
+            "description": "Legacy informational metadata. Omitted, false and true are all accepted; this field never blocks import or slicing.",
+            "x-unit": "none",
+            "x-defaultBehavior": "Optional compatibility field; ignored by validation and slicing policy.",
+            "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+            "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+            "x-safety": "Verify values against the exact hardware and firmware before printing."
+          },
+          "type": {
+            "type": "string",
+            "description": "Extruder feed architecture, used for documentation and retraction interpretation.",
+            "x-unit": "none",
+            "x-defaultBehavior": "Required; no implicit default",
+            "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+            "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+            "x-safety": "Verify values against the exact hardware and firmware before printing.",
+            "enum": [
+              "direct",
+              "bowden"
+            ]
+          }
+        },
+        "required": [
+          "nozzleDiameter",
+          "filamentDiameter",
+          "maxVolumetricFlow",
+          "retractionLength",
+          "retractionSpeed",
+          "type"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "thermal": {
+      "type": "object",
+      "description": "Verified thermal hardware range and cooling availability.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "properties": {
+        "minNozzle": {
+          "type": "number",
+          "description": "Minimum supported printing temperature.",
+          "x-unit": "C",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minimum": 0.0,
+          "maximum": 500.0
+        },
+        "maxNozzle": {
+          "type": "number",
+          "description": "Maximum permitted nozzle temperature.",
+          "x-unit": "C",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minimum": 1.0,
+          "maximum": 500.0
+        },
+        "minBed": {
+          "type": "number",
+          "description": "Minimum permitted bed temperature; zero for unheated.",
+          "x-unit": "C",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minimum": 0.0,
+          "maximum": 200.0
+        },
+        "maxBed": {
+          "type": "number",
+          "description": "Maximum permitted bed temperature; zero for unheated.",
+          "x-unit": "C",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minimum": 0.0,
+          "maximum": 200.0
+        },
+        "hasHeatedBed": {
+          "type": "boolean",
+          "description": "Verified heated bed; false requires zero minBed and maxBed.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing."
+        },
+        "partCooling": {
+          "type": "boolean",
+          "description": "Verified controllable part cooling fan.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing."
+        }
+      },
+      "required": [
+        "minNozzle",
+        "maxNozzle",
+        "minBed",
+        "maxBed",
+        "hasHeatedBed",
+        "partCooling"
+      ],
+      "additionalProperties": false
+    },
+    "capabilities": {
+      "type": "object",
+      "description": "Verified optional hardware. Unknown capabilities must be false. Flags do not emit unreviewed macros.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "properties": {
+        "autoBedLeveling": {
+          "type": "boolean",
+          "description": "Verified automatic bed leveling hardware. This does not automatically run a leveling command.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing."
+        },
+        "firmwareRetraction": {
+          "type": "boolean",
+          "description": "Must be false in initial adapter; explicit E retraction is used.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "const": false
+        },
+        "pressureAdvance": {
+          "type": "boolean",
+          "description": "Records verified support only. No pressure advance commands are generated.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing."
+        }
+      },
+      "required": [
+        "autoBedLeveling",
+        "firmwareRetraction",
+        "pressureAdvance"
+      ],
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "description": "Documentation for machine capability groups. A flow source/calibration record is optional; default flow caps do not require certification.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "additionalProperties": {
+        "type": "string",
+        "description": "Documentation source or calibration record; identify reference/simulation fixtures explicitly.",
+        "x-unit": "none",
+        "x-defaultBehavior": "Required; no implicit default",
+        "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+        "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+        "x-safety": "Verify values against the exact hardware and firmware before printing.",
+        "minLength": 1,
+        "maxLength": 2048
+      },
+      "properties": {
+        "buildVolume": {
+          "type": "string",
+          "description": "Evidence for usable dimensions.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "motion": {
+          "type": "string",
+          "description": "Evidence for motion limits.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "thermal": {
+          "type": "string",
+          "description": "Evidence for thermal limits.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "maxVolumetricFlow": {
+          "type": "string",
+          "description": "Optional note describing a default flow cap or calibration.",
+          "x-unit": "none",
+          "x-defaultBehavior": "Required; no implicit default",
+          "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+          "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+          "x-safety": "Verify values against the exact hardware and firmware before printing.",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "buildVolume",
+        "motion",
+        "thermal"
+      ]
+    }
+  }
+}

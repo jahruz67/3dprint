@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-slicer.local/schemas/optimization.schema.json",
+  "title": "Forge optimization profile 1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "mode",
+    "budget",
+    "minWalls",
+    "minInfill",
+    "supports"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "description": "Schema compatibility version. Unknown versions require an explicit future migration.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "examples": [
+        "1.0"
+      ],
+      "const": "1.0"
+    },
+    "mode": {
+      "type": "string",
+      "description": "Objective function, not a preset. See optimization/mathematics.md.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "enum": [
+        "fast",
+        "balanced",
+        "quality",
+        "strength",
+        "material"
+      ]
+    },
+    "budget": {
+      "type": "integer",
+      "description": "Maximum unique feasible candidate evaluations; deterministic search terminates when exhausted.",
+      "x-unit": "candidates",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minimum": 16,
+      "examples": [
+        256
+      ],
+      "maximum": 4096
+    },
+    "minWalls": {
+      "type": "integer",
+      "description": "User functional minimum perimeter count; optimizer may increase it.",
+      "x-unit": "count",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minimum": 1,
+      "examples": [
+        2
+      ],
+      "maximum": 12
+    },
+    "minInfill": {
+      "type": "number",
+      "description": "User functional minimum interior fill fraction.",
+      "x-unit": "fraction",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "supports": {
+      "type": "boolean",
+      "description": "Permit automatic support generation when geometry analysis finds overhangs. False with substantial overhangs produces a warning.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing."
+    },
+    "loadDirection": {
+      "type": "array",
+      "description": "Optional nominal unitless XYZ load vector. Zero vector means unspecified; directional strength remains an unvalidated engineering proxy.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Optional; omitted or zero vector means unknown load direction.",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "number",
+        "description": "Load vector component in build coordinates.",
+        "x-unit": "unitless",
+        "x-defaultBehavior": "Required; no implicit default",
+        "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+        "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+        "x-safety": "Verify values against the exact hardware and firmware before printing.",
+        "minimum": -1000000.0,
+        "maximum": 1000000.0
+      }
+    },
+    "supportMode": {
+      "type": "string",
+      "description": "Support objective: auto uses geometry readiness; optimized compares actual native alternatives; easy_remove favors contact removal; stable favors support robustness; off disables supports explicitly.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Optional; when absent legacy supports true means auto and false means off. An explicit mode takes precedence.",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "enum": [
+        "auto",
+        "optimized",
+        "easy_remove",
+        "stable",
+        "off"
+      ]
+    },
+    "supportStyle": {
+      "type": "string",
+      "description": "Native support structure. Auto permits supported native style comparison; organic, snug and grid select explicit native styles.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Optional; omitted means auto.",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "enum": [
+        "auto",
+        "organic",
+        "snug",
+        "grid"
+      ]
+    },
+    "supportPlacement": {
+      "type": "string",
+      "description": "Everywhere can anchor on lower model geometry; buildplate restricts supports to bed-connected placement and can leave internal overhangs unsupported.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Optional; omitted means everywhere.",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "enum": [
+        "everywhere",
+        "buildplate"
+      ]
+    },
+    "supportAngle": {
+      "type": "number",
+      "description": "Overhang slope threshold from the horizontal plane. Higher thresholds include steeper faces and can request more support. This is not an angle measured from vertical.",
+      "x-unit": "degrees",
+      "x-defaultBehavior": "Optional; omitted means 45 degrees. Internal Go zero value is normalized to 45; explicit JSON values must be 20 through 80.",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minimum": 20.0,
+      "maximum": 80.0
+    }
+  }
+}

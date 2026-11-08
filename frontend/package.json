@@ -1,0 +1,19 @@
+{
+  "name": "forge-slicer-ui",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "check": "svelte-check --tsconfig ./tsconfig.json"
+  },
+  "dependencies": {"svelte": "5.57.3", "three": "0.187.0"},
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "7.3.1",
+    "@types/three": "0.187.0",
+    "svelte-check": "4.7.7",
+    "typescript": "~6.0.2",
+    "vite": "8.3.5"
+  }
+}

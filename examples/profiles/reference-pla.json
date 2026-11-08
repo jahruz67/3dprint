@@ -1,0 +1,1 @@
+{"schemaVersion":"1.0","id":"reference-pla","name":"Reference PLA — verify spool settings","material":"PLA","density":1.24,"nozzleTemperature":205,"bedTemperature":60,"maxVolumetricFlow":8,"minLayerHeight":0.08,"maxLayerHeight":0.3,"fanPercent":100}

@@ -1,0 +1,10 @@
+{
+ "schemaVersion":"1.0","id":"reference-cartesian","name":"Reference Cartesian 220 (simulation)","manufacturer":"Forge software reference fixture","model":"Virtual Cartesian 220 — replace before physical printing",
+ "firmware":{"family":"marlin","version":"Reference Marlin 2 command subset","gcodeFlavor":"marlin2","extrusionMode":"absolute","supportedCommands":["G0","G1","G4","G21","G28","G90","G91","G92","M73","M82","M83","M84","M104","M106","M107","M109","M140","M190","M201","M203","M204","M205","M220","M221","M400"],"unsupportedCommands":["G2","G3","G10","G11"],"startGcode":[],"endGcode":[]},
+ "buildVolume":{"width":220,"depth":220,"height":250,"shape":"rectangular","origin":"front-left","excludedRegions":[]},
+ "motion":{"maxSpeed":120,"maxTravelSpeed":180,"maxAcceleration":1000},
+ "extruders":[{"nozzleDiameter":0.4,"filamentDiameter":1.75,"maxVolumetricFlow":8,"retractionLength":0.8,"retractionSpeed":30,"flowVerified":true,"type":"direct"}],
+ "thermal":{"minNozzle":170,"maxNozzle":260,"minBed":0,"maxBed":100,"hasHeatedBed":true,"partCooling":true},
+ "capabilities":{"autoBedLeveling":false,"firmwareRetraction":false,"pressureAdvance":false},
+ "provenance":{"buildVolume":"SIMULATION ONLY: reference fixture dimensions, no physical hardware claim","motion":"SIMULATION ONLY: bounded software fixture, replace with manufacturer limits","thermal":"SIMULATION ONLY: software validation fixture, not a hardware rating","maxVolumetricFlow":"SIMULATION ONLY: assumed reference throughput, flowVerified applies to fixture only; calibrate actual hardware"}
+}

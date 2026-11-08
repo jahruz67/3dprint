@@ -1,0 +1,1 @@
+{"schemaVersion":"1.0","id":"generic-petg","name":"Generic PETG - review spool settings","material":"PETG","density":1.27,"nozzleTemperature":230,"bedTemperature":80,"maxVolumetricFlow":5,"minLayerHeight":0.08,"maxLayerHeight":0.3,"fanPercent":20}

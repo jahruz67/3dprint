@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-slicer.local/schemas/filament.schema.json",
+  "title": "Forge filament profile 1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "material",
+    "density",
+    "nozzleTemperature",
+    "bedTemperature",
+    "maxVolumetricFlow",
+    "minLayerHeight",
+    "maxLayerHeight",
+    "fanPercent"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "description": "Schema compatibility version. Unknown versions require an explicit future migration.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "examples": [
+        "1.0"
+      ],
+      "const": "1.0"
+    },
+    "id": {
+      "type": "string",
+      "description": "Portable identifier, unique in its profile category.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "examples": [
+        "my-printer-main"
+      ],
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable filament identity.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "material": {
+      "type": "string",
+      "description": "Polymer family; does not infer temperatures. PLA+ identifies a modified PLA family and is mapped to PLA for native engine categorization.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "enum": [
+        "PLA",
+        "PLA+",
+        "PETG",
+        "ABS",
+        "ASA",
+        "TPU",
+        "PA",
+        "PC",
+        "other"
+      ]
+    },
+    "density": {
+      "type": "number",
+      "description": "Manufacturer or measured bulk polymer density.",
+      "x-unit": "g/cm3",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minimum": 0.5,
+      "maximum": 3.0
+    },
+    "nozzleTemperature": {
+      "type": "number",
+      "description": "Chosen nozzle setpoint, constrained by machine thermal limits. Custom unverified values require explicit notes and process review; they do not weaken machine limits.",
+      "x-unit": "C",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minimum": 100.0,
+      "maximum": 450.0
+    },
+    "bedTemperature": {
+      "type": "number",
+      "description": "Chosen bed setpoint; must be zero for unheated beds.",
+      "x-unit": "C",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minimum": 0.0,
+      "maximum": 180.0
+    },
+    "maxVolumetricFlow": {
+      "type": "number",
+      "description": "Material-specific conservative throughput; effective flow is min(machine,material).",
+      "x-unit": "mm3/s",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minimum": 0.1,
+      "maximum": 100.0
+    },
+    "minLayerHeight": {
+      "type": "number",
+      "description": "Minimum acceptable layer height for this material.",
+      "x-unit": "mm",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minimum": 0.02,
+      "maximum": 1.5
+    },
+    "maxLayerHeight": {
+      "type": "number",
+      "description": "Maximum acceptable layer height, also capped at 0.8 nozzle diameters.",
+      "x-unit": "mm",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minimum": 0.02,
+      "maximum": 1.5
+    },
+    "fanPercent": {
+      "type": "integer",
+      "description": "Part cooling setpoint; positive requires verified machine fan.",
+      "x-unit": "%",
+      "x-defaultBehavior": "Required; no implicit default",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minimum": 0,
+      "examples": [
+        100
+      ],
+      "maximum": 100
+    },
+    "notes": {
+      "type": "array",
+      "description": "Optional material-specific warnings, provenance notes and unverified custom assumptions. Display these before slicing; never interpret them as executable instructions.",
+      "x-unit": "none",
+      "x-defaultBehavior": "Optional; omitted means no extra material-specific notes, not evidence of calibration.",
+      "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+      "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+      "x-safety": "Verify values against the exact hardware and firmware before printing.",
+      "minItems": 0,
+      "maxItems": 24,
+      "items": {
+        "type": "string",
+        "description": "Human-readable material warning or assumption.",
+        "x-unit": "none",
+        "x-defaultBehavior": "Required; no implicit default",
+        "x-dependencies": "See validation-rules.md and firmware-compatibility.md",
+        "x-commonMistake": "Do not infer a machine capability from a similarly named model.",
+        "x-safety": "Verify values against the exact hardware and firmware before printing.",
+        "minLength": 1,
+        "maxLength": 1024
+      }
+    }
+  }
+}

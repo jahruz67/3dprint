@@ -1,0 +1,1 @@
+{"schemaVersion":"1.0","id":"generic-abs","name":"Generic ABS - review spool settings","material":"ABS","density":1.05,"nozzleTemperature":245,"bedTemperature":90,"maxVolumetricFlow":6,"minLayerHeight":0.08,"maxLayerHeight":0.3,"fanPercent":0}

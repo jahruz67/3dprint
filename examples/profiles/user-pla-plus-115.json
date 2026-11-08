@@ -1,0 +1,20 @@
+{
+ "schemaVersion":"1.0",
+ "id":"user-pla-plus-115",
+ "name":"Custom PLA+ 115 C nozzle - unverified",
+ "material":"PLA+",
+ "density":1.24,
+ "nozzleTemperature":115,
+ "bedTemperature":60,
+ "maxVolumetricFlow":2,
+ "minLayerHeight":0.08,
+ "maxLayerHeight":0.3,
+ "fanPercent":100,
+ "notes":[
+  "115 C is the explicitly requested custom NOZZLE setpoint, not a manufacturer recommendation or a bed-temperature setting.",
+  "This temperature is unverified and much lower than eSUN's published 210-230 C PLA+ nozzle reference. Confirm the exact spool and extrusion process before physical use.",
+  "Printer thermal minimums and firmware cold-extrusion safeguards remain in force. This material cannot override or weaken them.",
+  "Density 1.24 g/cm3, bed 60 C and full cooling are illustrative starting inputs based on eSUN PLA+ documentation; no claim identifies your spool as that product.",
+  "The 2 mm3/s material flow cap and layer interval are uncalibrated engineering inputs, not evidence of extrusion at 115 C."
+ ]
+}

@@ -1,0 +1,1 @@
+{"schemaVersion":"1.0","id":"generic-pa","name":"Generic PA12 - review spool settings","material":"PA","density":1.04,"nozzleTemperature":240,"bedTemperature":100,"maxVolumetricFlow":4,"minLayerHeight":0.08,"maxLayerHeight":0.3,"fanPercent":0}
